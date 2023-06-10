@@ -42,4 +42,13 @@ public class TaskManager {
         return tasks;
     }
 
+    public static void markTaskAsDone(int taskId) throws SQLException {
+        Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement("UPDATE tasks SET status = 1 WHERE id = ?");
+        statement.setInt(1, taskId);
+        statement.executeUpdate();
+        statement.close();
+        connection.close();
+    }
+
 }

@@ -56,6 +56,18 @@ public class Main {
                     }
                     break;
 
+                case 3:
+                    System.out.print("ID Tugas yang selesai: ");
+                    int taskId = scanner.nextInt();
+                    scanner.nextLine(); // Membersihkan newline
+                    try {
+                        TaskManager.markTaskAsDone(taskId);
+                        System.out.println("Tugas berhasil ditandai selesai.");
+                    } catch (SQLException e) {
+                        System.out.println("Terjadi kesalahan: " + e.getMessage());
+                    }
+                    break;
+
                 case 0:
                     System.out.println("Terima kasih!");
                     System.exit(0);
