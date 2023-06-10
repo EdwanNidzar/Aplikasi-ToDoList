@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -35,6 +36,22 @@ public class Main {
                         TaskManager.addTask(taskName, dueDate);
                         System.out.println("Tugas berhasil ditambahkan.");
                     } catch (ParseException | SQLException e) {
+                        System.out.println("Terjadi kesalahan: " + e.getMessage());
+                    }
+                    break;
+
+                case 2:
+                    try {
+                        List<Task> tasks = TaskManager.getAllTasks();
+                        if (tasks.isEmpty()) {
+                            System.out.println("Tidak ada tugas.");
+                        } else {
+                            System.out.println("Daftar Tugas:");
+                            for (Task task : tasks) {
+                                System.out.println(task.getId() + ". " + task.getTaskName() + " (Due Date: " + task.getDueDate() + ", Status: " + (task.getStatus() == 0 ? "Belum Selesai" : "Selesai") + ")");
+                            }
+                        }
+                    } catch (SQLException e) {
                         System.out.println("Terjadi kesalahan: " + e.getMessage());
                     }
                     break;

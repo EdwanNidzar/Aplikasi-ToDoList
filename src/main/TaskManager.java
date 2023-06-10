@@ -2,10 +2,10 @@ package main;
 
 import koneksi.DatabaseConnection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class TaskManager {
 
@@ -22,4 +22,24 @@ public class TaskManager {
         statement.close();
         connection.close();
     }
+
+    public static List<Task> getAllTasks() throws SQLException {
+        Connection connection = DatabaseConnection.getConnection();
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery("SELECT * FROM tasks");
+        List<Task> tasks = new ArrayList<>();
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String taskName = resultSet.getString("task_name");
+            Date dueDate = resultSet.getDate("due_date");
+            int status = resultSet.getInt("status");
+            Task task = new Task(id, taskName, dueDate, status);
+            tasks.add(task);
+        }
+        resultSet.close();
+        statement.close();
+        connection.close();
+        return tasks;
+    }
+
 }
